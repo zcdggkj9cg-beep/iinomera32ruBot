@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: ai-photo-studio
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_WEBHOOK_SECRET
+        generateValue: true
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: IMAGE_MODEL
+        value: gpt-image-2.5-flare
+      - key: EDIT_MODEL
+        value: gpt-image-2.5-sunburst
+      - key: VISION_MODEL
+        value: gpt-5.5
